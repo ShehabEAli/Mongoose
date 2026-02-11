@@ -1,0 +1,22 @@
+import mongoose from "mongoose";
+
+
+const noteSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        validate: {
+            validator: function (value) {
+                return value !== value.toUppercase();
+            },
+            message: "Title cannot be entirely uppercase",
+        }
+    },
+    content: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+
+}, {
+    timestamps: true
+})
+
+export const NoteModel = mongoose.model("Note", noteSchema);
